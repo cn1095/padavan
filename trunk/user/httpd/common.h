@@ -37,7 +37,7 @@
 #ifndef MAX
 #define	MAX(a, b)		(((a) > (b))?(a):(b))
 #endif /* MAX */
-
+typedef unsigned __int128 u128;
 typedef u_int64_t u64;
 typedef u_int32_t u32;
 typedef u_int16_t u16;
@@ -202,7 +202,8 @@ struct variable
 	const char *name;
 	const char *longname;
 	char **argv;
-	u64 event_mask;
+	/* u64 event_mask; */
+	u128 event_mask;
 };
 
 struct svcLink
@@ -213,10 +214,12 @@ struct svcLink
 
 struct evDesc
 {
-	u64 event_mask;
+	/* u64 event_mask; */
+	u128 event_mask;
 	u32 max_time;
 	const char* notify_cmd;
-	u64 event_unmask;
+	/* u64 event_unmask; */
+ 	u128 event_unmask;
 };
 
 #define ARGV(args...) ((char *[]) { args, NULL })
