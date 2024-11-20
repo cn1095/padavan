@@ -17,10 +17,6 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        echo "1=$GITHUB_REPOSITORY_OWNER"
-        echo "2=$GITHUB_REPOSITORY"
-        echo "3=$GITHUB_ACTOR"
-        exit 1
         sudo apt-get update
         sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot \
         cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
@@ -39,6 +35,14 @@ jobs:
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
+
+        ##### 修改内存空间和 storage空间
+        #sed -i 's/0x200000/0xe00000/g' /opt/rt-n56u/trunk/configs/boards/K2P-USB/kernel-3.4.x-5.0.config
+        #sed -i 's/0x200000/0xe00000/g' /opt/rt-n56u/trunk/configs/boards/K2P-USB/kernel-3.4.x.config
+        #sed -i 's/0x200000/0xe00000/g' /opt/rt-n56u/trunk/configs/boards/K2P-512/kernel-3.4.x.config
+        #sed -i 's/size_etc="6M"/size_etc="14M"/g' /opt/rt-n56u/trunk/user/scripts/dev_init.sh
+        sed -i 's/size_tmp="24M"/size_tmp="120M"/g' /opt/rt-n56u/trunk/user/scripts/dev_init.sh
+        #sed -i 's/mtd_part_size=65536/mtd_part_size=14680064/g' /opt/rt-n56u/trunk/user/scripts/mtd_storage.sh
     - name: Build Firmware
       env:
         TNAME: K2P-USB
