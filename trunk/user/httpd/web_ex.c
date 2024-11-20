@@ -870,7 +870,8 @@ validate_nvram_lan_subnet(void)
 static int
 validate_asp_apply(webs_t wp, int sid)
 {
-	u64 event_mask;
+	/* u64 event_mask; */
+	u128 event_mask;
 	int user_changed = 0;
 	int pass_changed = 0;
 	int lanip_changed = 0;
