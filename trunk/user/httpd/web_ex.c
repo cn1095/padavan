@@ -3945,7 +3945,7 @@ apply_cgi(const char *url, webs_t wp)
 			lucky_command(command, cmd_resetpass, sizeof(cmd_resetpass));
 		}
 		
-		websWrite(wp, "{\"cmd_output\": \"%s\"}", cmd_resetuser);
+		websWrite(wp, "{\"cmd_output\": \"%s\"}", cmd_resetpass);
 #endif
 		return 0;
 	}
