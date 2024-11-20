@@ -122,7 +122,7 @@ jobs:
         sed -i '/CONFIG_FIRMWARE_INCLUDE_NJIT_CLIENT/d' .config
         sed -i '/CONFIG_FIRMWARE_INCLUDE_NAPT66/d' .config
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SSSERVER/d' .config
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER=/d' .config
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER/d' .config
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT/d' .config
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD/d' .config
         sed -i '/CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER/d' .config
@@ -218,7 +218,7 @@ jobs:
         #echo "CONFIG_FIRMWARE_INCLUDE_IPSET=y" >> .config
 
         ##包含 NFSv3 服务器。约 0.6MB
-        echo "CONFIG_FIRMWARE_INCLUDE_NFSDn" >> .config
+        echo "CONFIG_FIRMWARE_INCLUDE_NFSD=n" >> .config
 
         ## 包含 CIFS（SMB）客户端。约 0.2MB
         echo "CONFIG_FIRMWARE_INCLUDE_CIFS=y" >> .config
