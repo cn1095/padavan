@@ -4852,7 +4852,7 @@ static char vntcli_log_txt[] =
 
 #if defined (APP_VNTS)
 static void
-do_vntslog_file(const char *url, FILE *stream)
+do_vnts_log_file(const char *url, FILE *stream)
 {
 	dump_file(stream, "/tmp/vnts.log");
 	fputs("\r\n", stream);
