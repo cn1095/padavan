@@ -37,7 +37,7 @@
 #ifndef MAX
 #define	MAX(a, b)		(((a) > (b))?(a):(b))
 #endif /* MAX */
-typedef unsigned __int128 u128;
+/*typedef unsigned __int128 u128;*/
 typedef u_int64_t u64;
 typedef u_int32_t u32;
 typedef u_int16_t u16;
@@ -87,36 +87,36 @@ typedef u_int8_t u8;
 #define EVM_RESTART_ARIA			(1ULL << 42)
 #define EVM_RESTART_SCUT			(1ULL << 43)
 #define EVM_RESTART_TTYD			(1ULL << 44)
-#define EVM_RESTART_VLMCSD			(1ULL << 45)
-#define EVM_RESTART_DNSFORWARDER	(1ULL << 47)
-#define EVM_RESTART_SHADOWSOCKS		(1ULL << 48)
-#define EVM_RESTART_SS_TUNNEL		(1ULL << 49)
-#define EVM_RESTART_MENTOHUST		(1ULL << 50)
-#define EVM_RESTART_ADBYBY			(1ULL << 51)
-#define EVM_RESTART_ALIDDNS			(1ULL << 52)
-#define EVM_RESTART_SMARTDNS	    (1ULL << 53)
-#define EVM_RESTART_FRP	    		(1ULL << 54)
-#define EVM_RESTART_KOOLPROXY		(1ULL << 55)
-#define EVM_RESTART_CADDY			(1ULL << 56)
-#define EVM_RESTART_ADGUARDHOME		(1ULL << 57)
-#define EVM_RESTART_WYY				(1ULL << 58)
-#define EVM_RESTART_ZEROTIER		(1ULL << 59)
-#define EVM_RESTART_NVPPROXY		(1ULL << 60)
-#define EVM_RESTART_DDNSTO	    	(1ULL << 61)
-#define EVM_RESTART_WIREGUARD		(1ULL << 62)
-#define EVM_RESTART_ALDRIVER		(1ULL << 63)
-#define EVM_RESTART_UUPLUGIN		(1ULL << 64)
-#define EVM_RESTART_LUCKY		(1ULL << 65)
-#define EVM_RESTART_WXSEND		(1ULL << 66)
-#define EVM_RESTART_CLOUDFLARED		(1ULL << 67)
-#define EVM_RESTART_VNTS		(1ULL << 68)
-#define EVM_RESTART_VNTCLI		(1ULL << 69)
-#define EVM_RESTART_NATPIERCE		(1ULL << 70)
-#define EVM_RESTART_TAILSCALE		(1ULL << 71)
-#define EVM_RESTART_ALIST		(1ULL << 72)
-#define EVM_RESTART_REBOOT			(1ULL << 73)
+/* #define EVM_RESTART_VLMCSD			(1ULL << 45) */
+/*#define EVM_RESTART_DNSFORWARDER	(1ULL << 47) */
+/*#define EVM_RESTART_SHADOWSOCKS		(1ULL << 48)*/
+/*#define EVM_RESTART_SS_TUNNEL		(1ULL << 49)*/
+/*#define EVM_RESTART_MENTOHUST		(1ULL << 50)*/
+#define EVM_RESTART_ADBYBY			(1ULL << 45)
+#define EVM_RESTART_ALIDDNS			(1ULL << 46)
+#define EVM_RESTART_SMARTDNS	    (1ULL << 47)
+#define EVM_RESTART_FRP	    		(1ULL << 48)
+/*#define EVM_RESTART_KOOLPROXY		(1ULL << 55)*/
+#define EVM_RESTART_CADDY			(1ULL << 49)
+#define EVM_RESTART_ADGUARDHOME		(1ULL << 50)
+/*#define EVM_RESTART_WYY				(1ULL << 58)*/
+#define EVM_RESTART_ZEROTIER		(1ULL << 51)
+/*#define EVM_RESTART_NVPPROXY		(1ULL << 60)*/
+/*#define EVM_RESTART_DDNSTO	    	(1ULL << 61)*/
+#define EVM_RESTART_WIREGUARD		(1ULL << 52)
+#define EVM_RESTART_ALDRIVER		(1ULL << 53)
+#define EVM_RESTART_UUPLUGIN		(1ULL << 54)
+#define EVM_RESTART_LUCKY		(1ULL << 55)
+#define EVM_RESTART_WXSEND		(1ULL << 56)
+#define EVM_RESTART_CLOUDFLARED		(1ULL << 57)
+#define EVM_RESTART_VNTS		(1ULL << 58)
+#define EVM_RESTART_VNTCLI		(1ULL << 59)
+#define EVM_RESTART_NATPIERCE		(1ULL << 60)
+#define EVM_RESTART_TAILSCALE		(1ULL << 61)
+#define EVM_RESTART_ALIST		(1ULL << 62)
+#define EVM_RESTART_REBOOT			(1ULL << 63)
 
-#define EVM_BLOCK_UNSAFE			(1ULL << 74) /* special case */
+#define EVM_BLOCK_UNSAFE			(1ULL << 64) /* special case */
 
 
 #define EVT_RESTART_FIREWALL		1
@@ -202,8 +202,8 @@ struct variable
 	const char *name;
 	const char *longname;
 	char **argv;
-	/* u64 event_mask; */
-	u128 event_mask;
+	 u64 event_mask; 
+	/*u128 event_mask;*/
 };
 
 struct svcLink
@@ -214,12 +214,12 @@ struct svcLink
 
 struct evDesc
 {
-	/* u64 event_mask; */
-	u128 event_mask;
+	 u64 event_mask; 
+	/*u128 event_mask;*/
 	u32 max_time;
 	const char* notify_cmd;
-	/* u64 event_unmask; */
- 	u128 event_unmask;
+	 u64 event_unmask;
+ 	/*u128 event_unmask; */
 };
 
 #define ARGV(args...) ((char *[]) { args, NULL })
