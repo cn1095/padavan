@@ -87,7 +87,7 @@ typedef u_int8_t u8;
 #define EVM_RESTART_ARIA			(1ULL << 42)
             //#define EVM_RESTART_SCUT			(1ULL << 43)
 #define EVM_RESTART_TTYD			(1ULL << 43)
-#define EVM_RESTART_VLMCSD			(1ULL << 44)
+		//#define EVM_RESTART_VLMCSD			(1ULL << 44)
             //#define EVM_RESTART_DNSFORWARDER	(1ULL << 47)
             //#define EVM_RESTART_SHADOWSOCKS		(1ULL << 48)
             //#define EVM_RESTART_SS_TUNNEL		(1ULL << 49)
@@ -114,9 +114,9 @@ typedef u_int8_t u8;
 #define EVM_RESTART_NATPIERCE		(1ULL << 61)
 #define EVM_RESTART_TAILSCALE		(1ULL << 62)
 #define EVM_RESTART_ALIST		(1ULL << 63)
-#define EVM_RESTART_REBOOT			(1ULL << 64)
+#define EVM_RESTART_REBOOT			(1ULL << 44)
 
-#define EVM_BLOCK_UNSAFE			(1ULL << 65) /* special case */
+#define EVM_BLOCK_UNSAFE			(1ULL << 64) /* special case */
 
 
 #define EVT_RESTART_FIREWALL		1
