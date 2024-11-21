@@ -1295,10 +1295,10 @@ update_variables_ex(int eid, webs_t wp, int argc, char **argv)
 		
 		i = 0;
 		while (events_desc[i].notify_cmd) {
-			if ((restart_needed_bits & events_desc[i].event_mask) != 0) {
+			if (((restart_needed_bits & events_desc[i].event_mask[0]) != 0) || ((restart_needed_bits & events_desc[i].event_mask[1]) != 0)) {
 				max_time = events_desc[i].max_time;
 				
-				if ((events_desc[i].event_mask & (EVM_RESTART_WAN|EVM_RESTART_IPV6)) != 0) {
+				if ((events_desc[i].event_mask[0] & (EVM_RESTART_WAN | EVM_RESTART_IPV6)) != 0 || (events_desc[i].event_mask[1] & (EVM_RESTART_WAN | EVM_RESTART_IPV6)) != 0) {
 					max_time = EVT_RESTART_WAN;
 					if (nvram_match("wan_proto", "dhcp") || nvram_match("wan_proto", "static"))
 						max_time = 3;
