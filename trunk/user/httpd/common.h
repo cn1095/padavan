@@ -80,8 +80,10 @@ typedef u_int8_t u8;
 #define EVM_RESTART_FTPD			(1ULL << 35)
 #define EVM_RESTART_NMBD			(1ULL << 36)
 #define EVM_RESTART_SMBD			(1ULL << 37)
-#define EVM_RESTART_NFSD			(1ULL << 38)
-#define EVM_RESTART_DMS				(1ULL << 39)
+		//#define EVM_RESTART_NFSD			(1ULL << 38)
+
+		//Minidlna UPnP 媒体服务器
+		#define EVM_RESTART_DMS				(1ULL << 39)
 #define EVM_RESTART_ITUNES			(1ULL << 40)
 			//#define EVM_RESTART_TRMD			(1ULL << 41) //#TRANSMISSION
 #define EVM_RESTART_ARIA			(1ULL << 42)
@@ -116,6 +118,7 @@ typedef u_int8_t u8;
 #define EVM_RESTART_ALIST		(1ULL << 63)
 #define EVM_RESTART_REBOOT			(1ULL << 44)
 //#define EVM_RESTART_CLOUDFLARE			(1ULL << 41)
+//#define EVM_RESTART_APP			(1ULL << 38)
 #define EVM_BLOCK_UNSAFE			(1ULL << 64) /* special case */
 
 
