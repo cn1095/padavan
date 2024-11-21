@@ -870,8 +870,7 @@ validate_nvram_lan_subnet(void)
 static int
 validate_asp_apply(webs_t wp, int sid)
 {
-	 u64 event_mask[2] = {0}; 
-	/* u128 event_mask; */
+	u64 event_mask;
 	int user_changed = 0;
 	int pass_changed = 0;
 	int lanip_changed = 0;
@@ -888,12 +887,10 @@ validate_asp_apply(webs_t wp, int sid)
 		if (!value)
 			continue;
 		
-		if (!get_login_safe() && ((v->event_mask[0] & EVM_BLOCK_UNSAFE) || (v->event_mask[1] & EVM_BLOCK_UNSAFE)))
-    			continue;
-
+		if (!get_login_safe() && (v->event_mask & EVM_BLOCK_UNSAFE))
+			continue;
 		
-		event_mask[0] = v->event_mask[0] & ~(EVM_BLOCK_UNSAFE);
-        	event_mask[1] = v->event_mask[1] & ~(EVM_BLOCK_UNSAFE);
+		event_mask = v->event_mask & ~(EVM_BLOCK_UNSAFE);
 		
 		if (!strcmp(v->longname, "Group"))
 			continue;
@@ -903,31 +900,31 @@ validate_asp_apply(webs_t wp, int sid)
 			
 			if (!strncmp(v->name, "dnsmasq.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_DNSMASQ_DIR, file_name))
-					restart_needed_bits |= event_mask[0];
+					restart_needed_bits |= event_mask;
 			} else if (!strncmp(v->name, "scripts.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_SCRIPTS_DIR, file_name))
-					restart_needed_bits |= event_mask[0];
+					restart_needed_bits |= event_mask;
 					if (!strcmp(file_name, "ap_script.sh"))
 					{
 					doSystem("/etc/storage/ap_script.sh");
 					}
 			} else if (!strncmp(v->name, "crontab.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_CRONTAB_DIR, nvram_safe_get("http_username")))
-					restart_needed_bits |= event_mask[0];
+					restart_needed_bits |= event_mask;
 			}
 #if defined (SUPPORT_HTTPS)
 			else if (!strncmp(v->name, "httpssl.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_HTTPSSL_DIR, file_name))
-					restart_needed_bits |= event_mask[0];
+					restart_needed_bits |= event_mask;
 			}
 #endif
 #if defined(APP_OPENVPN)
 			else if (!strncmp(v->name, "ovpnsvr.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_OVPNSVR_DIR, file_name))
-					restart_needed_bits |= event_mask[0];
+					restart_needed_bits |= event_mask;
 			} else if (!strncmp(v->name, "ovpncli.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_OVPNCLI_DIR, file_name))
-					restart_needed_bits |= event_mask[0];
+					restart_needed_bits |= event_mask;
 			}
 #endif
 			continue;
@@ -1122,8 +1119,7 @@ validate_asp_apply(webs_t wp, int sid)
 		}
 		
 		if (event_mask) {
-			restart_needed_bits |= event_mask[0];
-			restart_needed_bits |= event_mask[1];
+			restart_needed_bits |= event_mask;
 			dbG("debug restart_needed_bits: 0x%llx\n", restart_needed_bits);
 		}
 	}
@@ -1239,8 +1235,7 @@ update_variables_ex(int eid, webs_t wp, int argc, char **argv)
 					validate_asp_apply(wp, sid);	// for some nvram with this group
 					
 					if (v->name && nvram_get_int(group_id) > 0) {
-						restart_needed_bits |= (v->event_mask[0] & ~(EVM_BLOCK_UNSAFE));
-						restart_needed_bits |= (v->event_mask[1] & ~(EVM_BLOCK_UNSAFE));
+						restart_needed_bits |= (v->event_mask & ~(EVM_BLOCK_UNSAFE));
 						dbG("group restart_needed_bits: 0x%llx\n", restart_needed_bits);
 #if BOARD_HAS_5G_RADIO
 						if (!strcmp(group_id, "RBRList") || !strcmp(group_id, "ACLList"))
@@ -1295,10 +1290,10 @@ update_variables_ex(int eid, webs_t wp, int argc, char **argv)
 		
 		i = 0;
 		while (events_desc[i].notify_cmd) {
-			if (((restart_needed_bits & events_desc[i].event_mask[0]) != 0) || ((restart_needed_bits & events_desc[i].event_mask[1]) != 0)) {
+			if ((restart_needed_bits & events_desc[i].event_mask) != 0) {
 				max_time = events_desc[i].max_time;
 				
-				if ((events_desc[i].event_mask[0] & (EVM_RESTART_WAN | EVM_RESTART_IPV6)) != 0 || (events_desc[i].event_mask[1] & (EVM_RESTART_WAN | EVM_RESTART_IPV6)) != 0) {
+				if ((events_desc[i].event_mask & (EVM_RESTART_WAN|EVM_RESTART_IPV6)) != 0) {
 					max_time = EVT_RESTART_WAN;
 					if (nvram_match("wan_proto", "dhcp") || nvram_match("wan_proto", "static"))
 						max_time = 3;
@@ -1364,11 +1359,9 @@ ej_notify_services(int eid, webs_t wp, int argc, char **argv)
 
 	i = 0;
 	while (events_desc[i].notify_cmd) {
-		if (((restart_needed_bits & events_desc[i].event_mask[0]) != 0) || ((restart_needed_bits & events_desc[i].event_mask[1]) != 0)) {
-			restart_needed_bits &= ~events_desc[i].event_mask[0];
-			restart_needed_bits &= ~events_desc[i].event_mask[1];
-			restart_needed_bits &= ~events_desc[i].event_unmask[0];
-			restart_needed_bits &= ~events_desc[i].event_unmask[1];
+		if ((restart_needed_bits & events_desc[i].event_mask) != 0) {
+			restart_needed_bits &= ~events_desc[i].event_mask;
+			restart_needed_bits &= ~events_desc[i].event_unmask;
 			notify_rc(events_desc[i].notify_cmd);
 		}
 		i++;
