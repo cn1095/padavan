@@ -1239,7 +1239,8 @@ update_variables_ex(int eid, webs_t wp, int argc, char **argv)
 					validate_asp_apply(wp, sid);	// for some nvram with this group
 					
 					if (v->name && nvram_get_int(group_id) > 0) {
-						restart_needed_bits |= (v->event_mask & ~(EVM_BLOCK_UNSAFE));
+						restart_needed_bits |= (v->event_mask[0] & ~(EVM_BLOCK_UNSAFE));
+						restart_needed_bits |= (v->event_mask[1] & ~(EVM_BLOCK_UNSAFE));
 						dbG("group restart_needed_bits: 0x%llx\n", restart_needed_bits);
 #if BOARD_HAS_5G_RADIO
 						if (!strcmp(group_id, "RBRList") || !strcmp(group_id, "ACLList"))
