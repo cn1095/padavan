@@ -65,7 +65,7 @@ typedef u_int8_t u8;
 #define EVM_RESTART_HTTPD			(1ULL << 20)
 #define EVM_RESTART_TELNETD			(1ULL << 21)
 #define EVM_RESTART_SSHD			(1ULL << 22)
-//#define EVM_RESTART_WINS			(1ULL << 23)
+#define EVM_RESTART_WINS			(1ULL << 23)
 #define EVM_RESTART_LLTD			(1ULL << 24)
 #define EVM_RESTART_ADSC			(1ULL << 25)
 #define EVM_RESTART_IPTV			(1ULL << 26)
@@ -83,7 +83,7 @@ typedef u_int8_t u8;
 #define EVM_RESTART_NFSD			(1ULL << 38)
 #define EVM_RESTART_DMS				(1ULL << 39)
 #define EVM_RESTART_ITUNES			(1ULL << 40)
-#define EVM_RESTART_TRMD			(1ULL << 41)
+			//#define EVM_RESTART_TRMD			(1ULL << 41) //#TRANSMISSION
 #define EVM_RESTART_ARIA			(1ULL << 42)
             //#define EVM_RESTART_SCUT			(1ULL << 43)
 #define EVM_RESTART_TTYD			(1ULL << 43)
@@ -115,7 +115,7 @@ typedef u_int8_t u8;
 #define EVM_RESTART_TAILSCALE		(1ULL << 62)
 #define EVM_RESTART_ALIST		(1ULL << 63)
 #define EVM_RESTART_REBOOT			(1ULL << 44)
-
+//#define EVM_RESTART_CLOUDFLARE			(1ULL << 41)
 #define EVM_BLOCK_UNSAFE			(1ULL << 64) /* special case */
 
 
