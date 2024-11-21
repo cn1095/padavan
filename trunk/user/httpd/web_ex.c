@@ -1364,9 +1364,11 @@ ej_notify_services(int eid, webs_t wp, int argc, char **argv)
 
 	i = 0;
 	while (events_desc[i].notify_cmd) {
-		if ((restart_needed_bits & events_desc[i].event_mask) != 0) {
-			restart_needed_bits &= ~events_desc[i].event_mask;
-			restart_needed_bits &= ~events_desc[i].event_unmask;
+		if (((restart_needed_bits & events_desc[i].event_mask[0]) != 0) || ((restart_needed_bits & events_desc[i].event_mask[1]) != 0)) {
+			restart_needed_bits &= ~events_desc[i].event_mask[0];
+			restart_needed_bits &= ~events_desc[i].event_mask[1];
+			restart_needed_bits &= ~events_desc[i].event_unmask[0];
+			restart_needed_bits &= ~events_desc[i].event_unmask[1];
 			notify_rc(events_desc[i].notify_cmd);
 		}
 		i++;
