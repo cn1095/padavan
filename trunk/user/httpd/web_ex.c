@@ -870,7 +870,7 @@ validate_nvram_lan_subnet(void)
 static int
 validate_asp_apply(webs_t wp, int sid)
 {
-	u64 event_mask;
+	 u64 event_mask[2] = {0}; 
 	/* u128 event_mask; */
 	int user_changed = 0;
 	int pass_changed = 0;
@@ -891,7 +891,8 @@ validate_asp_apply(webs_t wp, int sid)
 		if (!get_login_safe() && (v->event_mask & EVM_BLOCK_UNSAFE))
 			continue;
 		
-		event_mask = v->event_mask & ~(EVM_BLOCK_UNSAFE);
+		event_mask[0] = v->event_mask[0] & ~(EVM_BLOCK_UNSAFE);
+        	event_mask[1] = v->event_mask[1] & ~(EVM_BLOCK_UNSAFE);
 		
 		if (!strcmp(v->longname, "Group"))
 			continue;
@@ -901,31 +902,31 @@ validate_asp_apply(webs_t wp, int sid)
 			
 			if (!strncmp(v->name, "dnsmasq.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_DNSMASQ_DIR, file_name))
-					restart_needed_bits |= event_mask;
+					restart_needed_bits |= event_mask[0];
 			} else if (!strncmp(v->name, "scripts.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_SCRIPTS_DIR, file_name))
-					restart_needed_bits |= event_mask;
+					restart_needed_bits |= event_mask[0];
 					if (!strcmp(file_name, "ap_script.sh"))
 					{
 					doSystem("/etc/storage/ap_script.sh");
 					}
 			} else if (!strncmp(v->name, "crontab.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_CRONTAB_DIR, nvram_safe_get("http_username")))
-					restart_needed_bits |= event_mask;
+					restart_needed_bits |= event_mask[0];
 			}
 #if defined (SUPPORT_HTTPS)
 			else if (!strncmp(v->name, "httpssl.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_HTTPSSL_DIR, file_name))
-					restart_needed_bits |= event_mask;
+					restart_needed_bits |= event_mask[0];
 			}
 #endif
 #if defined(APP_OPENVPN)
 			else if (!strncmp(v->name, "ovpnsvr.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_OVPNSVR_DIR, file_name))
-					restart_needed_bits |= event_mask;
+					restart_needed_bits |= event_mask[0];
 			} else if (!strncmp(v->name, "ovpncli.", 8)) {
 				if (write_textarea_to_file(value, STORAGE_OVPNCLI_DIR, file_name))
-					restart_needed_bits |= event_mask;
+					restart_needed_bits |= event_mask[0];
 			}
 #endif
 			continue;
