@@ -888,8 +888,9 @@ validate_asp_apply(webs_t wp, int sid)
 		if (!value)
 			continue;
 		
-		if (!get_login_safe() && (v->event_mask & EVM_BLOCK_UNSAFE))
-			continue;
+		if (!get_login_safe() && ((v->event_mask[0] & EVM_BLOCK_UNSAFE) || (v->event_mask[1] & EVM_BLOCK_UNSAFE)))
+    			continue;
+
 		
 		event_mask[0] = v->event_mask[0] & ~(EVM_BLOCK_UNSAFE);
         	event_mask[1] = v->event_mask[1] & ~(EVM_BLOCK_UNSAFE);
@@ -1121,7 +1122,8 @@ validate_asp_apply(webs_t wp, int sid)
 		}
 		
 		if (event_mask) {
-			restart_needed_bits |= event_mask;
+			restart_needed_bits |= event_mask[0];
+			restart_needed_bits |= event_mask[1];
 			dbG("debug restart_needed_bits: 0x%llx\n", restart_needed_bits);
 		}
 	}
