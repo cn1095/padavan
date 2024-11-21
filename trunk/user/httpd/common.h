@@ -199,25 +199,47 @@ typedef u_int8_t u8;
 
 struct variable
 {
-	const char *name;
-	const char *longname;
-	char **argv;
-	u64 event_mask;
+    const char *name;
+    const char *longname;
+    char **argv;
+    u64 event_mask[2];  // 使用两个 u64 数组，表示 128 位掩码
 };
 
 struct svcLink
 {
-	const char *serviceId;
-	struct variable *variables;
+    const char *serviceId;
+    struct variable *variables;
 };
 
 struct evDesc
 {
-	u64 event_mask;
-	u32 max_time;
-	const char* notify_cmd;
-	u64 event_unmask;
+    u64 event_mask[2];  // 使用两个 u64 数组
+    u32 max_time;
+    const char* notify_cmd;
+    u64 event_unmask[2];  // 使用两个 u64 数组
 };
+
+// 设置掩码的指定位置（支持128位掩码）
+#define SET_EVENT_MASK(mask_array, bit) { \
+    int index = (bit) / 64; \
+    int offset = (bit) % 64; \
+    mask_array[index] |= (1ULL << offset); \
+}
+
+// 清除掩码的指定位置
+#define CLEAR_EVENT_MASK(mask_array, bit) { \
+    int index = (bit) / 64; \
+    int offset = (bit) % 64; \
+    mask_array[index] &= ~(1ULL << offset); \
+}
+
+// 检查掩码的指定位置是否被设置
+#define IS_EVENT_MASK_SET(mask_array, bit) ({ \
+    int index = (bit) / 64; \
+    int offset = (bit) % 64; \
+    (mask_array[index] & (1ULL << offset)) != 0; \
+})
+
 
 #define ARGV(args...) ((char *[]) { args, NULL })
 
